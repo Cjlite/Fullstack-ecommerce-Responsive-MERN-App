@@ -24,15 +24,7 @@ const Home = () => {
   const preveProduct = () => {
     slideProductRef.current.scrollLeft -= 200;
   };
-
-
- 
-
-
   
-
-
-
   return (
     <div className="p-2 md:p-4">
       <div className="md:flex gap-4 py-2">

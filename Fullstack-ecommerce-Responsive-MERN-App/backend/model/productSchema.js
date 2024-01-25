@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-
-
 const schemaProduct = mongoose.Schema({
     name: String,
     category: String,
@@ -9,5 +7,6 @@ const schemaProduct = mongoose.Schema({
     price: String,
     description: String,
 });
+
 const productModel = mongoose.model("product", schemaProduct)
 module.exports = productModel

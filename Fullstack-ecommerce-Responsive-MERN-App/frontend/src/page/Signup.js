@@ -55,7 +55,7 @@ function Signup() {
     if (firstName && email && password && confirmPassword) {
       if (password === confirmPassword) {
 
-        const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/signup`, {
+        const fetchData = await fetch(`http://localhost:8080/signup`, {
           method: "POST",
           headers: {
             "content-type": "application/json"

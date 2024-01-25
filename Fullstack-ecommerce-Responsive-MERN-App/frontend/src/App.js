@@ -13,11 +13,20 @@ function App() {
  
   useEffect(()=>{
     (async()=>{
-      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMIN}/product`)
-      const resData = await res.json()
-      dispatch(setDataProduct(resData))
-    })()
-  },[])
+      try {
+        const res = await fetch(`http://localhost:8080/product`);
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const resData = await res.json();
+        dispatch(setDataProduct(resData));
+      } catch (error) {
+        // Handle the error, you can log, notify the user, or use toast messages
+        console.error("Error fetching product data:", error);
+        toast.error("Failed to fetch product data");
+      }
+    })();
+  },[dispatch])
 
   return (
     <>

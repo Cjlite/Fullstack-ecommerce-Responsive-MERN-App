@@ -6,7 +6,9 @@ const userModel = require("./model/user")
 const productModel = require("./model/productSchema")
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const db = require('./config/connection');
 
+const PORT = process.env.PORT || 8080;
 const secretKey = 'mynameischetansudamjadhav';
 
 const app = express();
@@ -14,22 +16,10 @@ app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
-const PORT = process.env.PORT || 8080;
-
-//mongodb connection
-mongoose.set("strictQuery", false);
-mongoose
-  .connect(process.env.MONGODB_URL)
-  .then(() => console.log("Connect to Databse"))
-  .catch((err) => console.log(err));
-
-
-//api
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-//sign up
 app.post("/signup", async (req, res) => {
   // console.log(req.body);
   const { email } = req.body;
@@ -47,7 +37,6 @@ app.post("/signup", async (req, res) => {
   });
 });
 
-//api login
 app.post('/login', (req, res) => {
   const { email } = req.body;
   userModel.findOne({ email: email }, (err, result) => {
@@ -84,14 +73,6 @@ app.post('/login', (req, res) => {
   });
 });
 
-
-
-
-
-
-
-//save product in data 
-//api
 app.post("/uploadProduct", async (req, res) => {
   // console.log(req.body)
   const data = await productModel(req.body)
@@ -99,7 +80,6 @@ app.post("/uploadProduct", async (req, res) => {
   res.send({ message: "Upload successfully" })
 })
 
-//
 app.get("/product", async (req, res) => {
   const data = await productModel.find({})
   res.send(JSON.stringify(data))
@@ -107,4 +87,4 @@ app.get("/product", async (req, res) => {
 
 
 
-app.listen(PORT, () => console.log("server is running at port : " + PORT));
+app.listen(PORT, () => console.log(`server is running at port : ${PORT}`));
